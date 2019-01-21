@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 
 class Search extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      searchQuery: "",
-    }
-  }
-
-
-  componentDidMount() {
-  }
-
   render() {
     return (
-      <div>
-        Search Goes Here
-        <input defaultValue={this.state.searchQuery} onChange={this.onSearchQueryChanged} type="text"></input>
-        {this.state.searchQuery}
-        <button>Search</button>
+      <div className="jumbotron text-center">
+        <div className="container">
+          <input className="form-control"  onChange={e => this.props.onSearchQueryChanged(e.target.value)} type="text"></input>
+          <button type="button" className="btn btn-secondary btn-lg" style={{marginRight: '1%', marginTop: "3%"}}>Search</button>
+        </div>
       </div>
     )
   }
