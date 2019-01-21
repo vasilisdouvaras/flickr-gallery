@@ -31,6 +31,7 @@ class App extends Component {
     this.setState({ searchQuery: newSearchQuery })
   }
 
+  // add selected image to list
   onImageSelect(newImage) {
     let list = this.state.selectedImages;
     list.push(newImage)
@@ -51,6 +52,7 @@ class App extends Component {
     else {
       url = `https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=${API_KEY}&safe_search=1&format=json&nojsoncallback=1`
     }
+    
     fetch(url)
       .then(response => response.json())
       .then(images => {

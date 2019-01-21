@@ -30,7 +30,8 @@ class Gallery extends Component {
 
     return (
       <div className="gallery">
-        {this.props.images.length > 0 ? <button type="button" className="btn btn-secondary btn-lg" onClick={() => {this.setState({showGallery: true})}} style={{ marginLeft: '1%', marginTop: "3%" }}>Gallery</button> : null}
+        {/* only want to display gallery if selected images exist */}
+        {this.props.images.length > 0 ? <button type="button" className="btn btn-secondary btn-lg" onClick={() => {this.setState({showGallery: true})}}>Gallery</button> : null}
         {gallery}
       </div>
     )
