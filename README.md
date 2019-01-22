@@ -2,7 +2,7 @@
 
 Please ensure you add your Flickr API key to the .env file.
 
-### `REACT_APP_FLICKR_API_KEY=(your key here)`
+`REACT_APP_FLICKR_API_KEY=(your key here)`
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
