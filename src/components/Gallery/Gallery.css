@@ -1,10 +1,8 @@
 .gallery-container {
-  padding: 0;
-  margin:0;
+  background-color: #E9ECEF;
+  padding: 2%;
 }
 
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: 'flex-start';
+  margin:0 auto;
 }

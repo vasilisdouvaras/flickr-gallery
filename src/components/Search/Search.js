@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 class Search extends Component {
   render() {
     return (
-      <div className="jumbotron text-center">
-        <div className="container">
-          <input className="form-control"  onChange={e => this.props.onSearchQueryChanged(e.target.value)} type="text"></input>
-          <button type="button" className="btn btn-secondary btn-lg" style={{marginTop: "3%"}}>Search</button>
+        <div className="container" style={{width: '40%'}}>
+          <div className="input-group">
+            <input className="form-control" onKeyPress={e => this.props.onSearchQueryChanged(e.target.value)} type="text"></input>
+            <button type="button" className="btn btn-secondary">Search</button>
+          </div>
         </div>
-      </div>
     )
   }
 }
