@@ -6,34 +6,45 @@ class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showGallery: true
+      showGallery: false
     }
+    this.onGalleryClicked = this.onGalleryClicked.bind(this);
+
   }
+  onGalleryClicked() {
+    this.setState({ showGallery: !this.state.showGallery })
+  }
+
   render() {
-    let gallery;
+    let galleryImages;
 
     if (this.state.showGallery === true) {
-      gallery = this.props.images.map((image, index) =>
-        <Image
-          key={image.id}
-          farm={image.farm}
-          server={image.server}
-          id={image.id}
-          secret={image.secret}
-          alt={image.title}
-        />
-      )
+      galleryImages =
+        this.props.images.map((image, index) =>
+          <Image
+            key={image.id}
+            farm={image.farm}
+            server={image.server}
+            id={image.id}
+            secret={image.secret}
+            alt={image.title}
+          />
+        )
     }
     else {
-      gallery = null;
+      galleryImages = null;
     }
 
     return (
-      <div className="gallery">
-        {/* only want to display gallery if selected images exist */}
-        {this.props.images.length > 0 ? <button type="button" className="btn btn-secondary btn-lg" onClick={() => {this.setState({showGallery: true})}}>Gallery</button> : null}
-        {gallery}
+      <div className="gallery-container">
+        <button type="button" className="btn btn-secondary btn-lg" onClick={() => this.onGalleryClicked()}> {!this.state.showGallery ? `View Gallery (${this.props.images.length})` : "Close Gallery"}</button>
+        <div className="gallery" >
+          {/* only want to display gallery if selected images exist */}
+          {/* {this.state.showGallery === true ? <h1 onClick={() => this.onGalleryClicked()}>X</h1> : null} */}
+          {galleryImages}
+        </div>
       </div>
+
     )
   }
 }

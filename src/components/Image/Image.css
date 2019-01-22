@@ -1,6 +1,7 @@
 .image-container{ 
   margin: 1%; 
   width: 23%;
+  transition-duration: 0.1s
 } 
 
 .image {
@@ -8,4 +9,8 @@
   width: 100%; 
   max-height: 100%; 
   height: 200px
+}
+
+.image-container:hover {
+  transform: scale(1.5);
 }
