@@ -16,10 +16,6 @@ class App extends Component {
       images: [],
       selectedImages: [],
       showGallery: false,
-      gallery: [],
-      isAuthenticated: false,
-      user: null,
-      token: ''
     }
     this.onSearchQueryChanged = this.onSearchQueryChanged.bind(this);
     this.onImageSelect = this.onImageSelect.bind(this);
@@ -36,9 +32,17 @@ class App extends Component {
 
   // add selected image to list
   onImageSelect(newImage) {
-    let list = this.state.selectedImages;
-    list.push(newImage)
-    this.setState({selectedImages: list})
+    let selectedList = this.state.selectedImages;
+    let imageList = this.state.images;
+    selectedList.push(newImage)
+    // remove image from image list if it's added to gallery
+    for (let i=0; i < imageList.length; i++) {
+      if (imageList[i].id === newImage.id) {
+        imageList.splice(i, 1)
+      }
+    }
+    this.setState({images: imageList})
+    this.setState({selectedImages: selectedList})
   }
 
   getGallery(gallery_id) {
