@@ -12,19 +12,22 @@ class Gallery extends Component {
     this.onGalleryClicked = this.onGalleryClicked.bind(this);
     this.onImageNavigate = this.onImageNavigate.bind(this);
   }
+
   onGalleryClicked() {
     this.setState({ showGallery: !this.state.showGallery })
   }
 
-  onImageNavigate(dir) {
-    if (dir === 'forward') {
-      if (this.props.images[this.state.currentImage + 1]) {
-        this.setState({ currentImage: (this.state.currentImage + 1) })
+  onImageNavigate(amount) {
+    // check if we want to go to beginning or the end
+    if (amount < 1 || amount < -1) {
+      if (this.props.images[amount]) {
+        this.setState({ currentImage: amount })
       }
     }
+    // else we just navigate one by one
     else {
-      if (this.props.images[this.state.currentImage - 1]) {
-        this.setState({ currentImage: this.state.currentImage - 1 })
+      if (this.props.images[this.state.currentImage + amount]) {
+        this.setState({ currentImage: this.state.currentImage + amount })
       }
     }
   }
@@ -36,9 +39,9 @@ class Gallery extends Component {
       let image = this.props.images[this.state.currentImage];
       galleryImages =
         <div style={{ position: 'relative' }}>
-          <button type="button" onClick={() => this.onImageNavigate()} style={{ position: 'absolute', left: '0', top: '50%' }} className="btn btn-dark">{"<"}</button>
+          <button type="button" onClick={() => this.onImageNavigate(this.state.currentImage - this.state.currentImage)} style={{ left: '0' }} className="btn btn-dark btn-gallery">{"<<"}</button>
+          <button type="button" onClick={() => this.onImageNavigate(-1)} style={{ left: '6%' }} className="btn btn-dark btn-gallery">{"<"}</button>
           <div className="gallery" style={{ padding: '2%' }} >
-            {/* only want to display gallery if selected images exist */}
             <Image
               key={image.id}
               farm={image.farm}
@@ -49,7 +52,8 @@ class Gallery extends Component {
               galleryImage={true}
             />
           </div>
-          <button type="button" onClick={() => this.onImageNavigate('forward')} style={{ position: 'absolute', right: '0', top: '50%' }} className="btn btn-dark">{">"}</button>
+          <button type="button" onClick={() => this.onImageNavigate(1)} style={{ right: '6%' }} className="btn btn-dark btn-gallery">{">"}</button>
+          <button type="button" onClick={() => this.onImageNavigate(this.props.images.length - 1)} style={{ right: '0' }} className="btn btn-dark btn-gallery">{">>"}</button>
           {`Image ${this.state.currentImage + 1} out of ${this.props.images.length}`}
         </div>
     }

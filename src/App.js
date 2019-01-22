@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { debounce } from 'lodash';
-import './App.css';
 
 import ImageList from './components/ImageList/ImageList.js'
 import Header from './components/Header/Header.js'
 import Main from './components/Main/Main.js'
 
-const API_KEY = process.env.REACT_APP_FLICKR_API_KEY;
+import './App.css';
+
+// get API key stored in env file
+const API_KEY = process.env.REACT_APP_FLICKR_API_KEY ? process.env.REACT_APP_FLICKR_API_KEY : console.error("Flickr API key missing from .env file");
+
+/* 
+  Unfortunately I couldn't get authentication to work due to not being able to figure out
+  how to generate the signature, therefore I am unable to create and add images to a flickr gallery. 
+  The functionality is implemented based on "local" data at the moment however I would also like
+  to try explain how I would implement it if authentication was working:
+
+  1.) Follow the steps given here: https://www.flickr.com/services/api/auth.oauth.html in order to get request tokens and signatures.
+  2.) Create the gallery with the name of the search query that was entered (flickr.galleries.create).
+  3.) Fetch this gallery from the api (flickr.galleries.getList) and set it to a gallery state value.
+  4.) Obtain the id of the selected photo and add it to the gallery state value as well as sending it with the api (flickr.galleries.addPhoto).
+  5.) Fetch the gallery and all it's images when the user click on the "View Gallery" button (flickr.galleries.getList).
+*/
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +30,6 @@ class App extends Component {
       searchQuery: "",
       images: [],
       selectedImages: [],
-      showGallery: false,
     }
     this.onSearchQueryChanged = this.onSearchQueryChanged.bind(this);
     this.onImageSelect = this.onImageSelect.bind(this);
@@ -36,28 +50,19 @@ class App extends Component {
     let imageList = this.state.images;
     selectedList.push(newImage)
     // remove image from image list if it's added to gallery
-    for (let i=0; i < imageList.length; i++) {
+    for (let i = 0; i < imageList.length; i++) {
       if (imageList[i].id === newImage.id) {
         imageList.splice(i, 1)
       }
     }
-    this.setState({images: imageList})
-    this.setState({selectedImages: selectedList})
-  }
-
-  getGallery(gallery_id) {
-    fetch(`https://api.flickr.com/services/rest/?method=flickr.galleries.getList&api_key=d3575747e3a76801b4220637d7d3aa68&user_id=&format=json&nojsoncallback=1&auth_token=72157689019775923-f8e228a741152d67&api_sig=66ded9ddc362a4d9b129d70e764a1b32`)
-    .then(response => response.json())
-    .then(gallery => {
-      this.setState({gallery: gallery.galleries.gallery})
-    })
-    .catch(e => console.error(e))
+    this.setState({ images: imageList })
+    this.setState({ selectedImages: selectedList })
   }
 
   // input needs to be debounced to prevent multiple api requests
   onSearchQueryChanged = debounce((text) => {
     this.setSearchQuery(text);
-  }, 500);
+  }, 50);
 
   getImages(searchQuery) {
     // if search query doesn't exist we default to some interesting photos
@@ -68,7 +73,7 @@ class App extends Component {
     else {
       url = `https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=${API_KEY}&format=json&nojsoncallback=1`
     }
-    
+
     fetch(url)
       .then(response => response.json())
       .then(images => {

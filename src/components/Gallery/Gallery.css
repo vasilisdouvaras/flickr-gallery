@@ -6,3 +6,9 @@
 .gallery {
   margin:0 auto;
 }
+
+.btn-gallery {
+  position: absolute;
+  top: 50%;
+  margin: 2%;
+}
