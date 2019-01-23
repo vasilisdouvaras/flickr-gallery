@@ -9,7 +9,7 @@ class Search extends Component {
   }
   render() {
     return (
-      <div className="container" style={{ width: '40%' }}>
+      <div className="container" style={{ width: '40%', padding: '2%'}}>
         <div className="input-group">
           {/* When value is changed we want to change state as well so that 
               when search is clicked we use the same value as the input.

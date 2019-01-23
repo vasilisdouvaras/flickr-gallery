@@ -19,7 +19,7 @@ class Gallery extends Component {
 
   onImageNavigate(amount) {
     // check if we want to go to beginning or the end
-    if (amount < 1 || amount < -1) {
+    if (amount < -1 || amount === 0) {
       if (this.props.images[amount]) {
         this.setState({ currentImage: amount })
       }
@@ -38,10 +38,10 @@ class Gallery extends Component {
     if (this.state.showGallery === true) {
       let image = this.props.images[this.state.currentImage];
       galleryImages =
-        <div style={{ position: 'relative' }}>
-          <button type="button" onClick={() => this.onImageNavigate(this.state.currentImage - this.state.currentImage)} style={{ left: '0' }} className="btn btn-dark btn-gallery">{"<<"}</button>
+        <div style={{position: 'relative' }}>
+          <button type="button" onClick={() => this.onImageNavigate(0)} style={{ left: '0' }} className="btn btn-dark btn-gallery">{"<<"}</button>
           <button type="button" onClick={() => this.onImageNavigate(-1)} style={{ left: '6%' }} className="btn btn-dark btn-gallery">{"<"}</button>
-          <div className="gallery" style={{ padding: '2%' }} >
+          <div className="p2" >
             <Image
               key={image.id}
               farm={image.farm}
@@ -62,7 +62,7 @@ class Gallery extends Component {
     }
 
     return (
-      <div className="gallery-container">
+      <div className="shadow-sm p-5 bg-light">
         <button type="button" className="btn btn-secondary" onClick={() => this.onGalleryClicked()}> {!this.state.showGallery ? `View Gallery (${this.props.images.length})` : "Close Gallery"}</button>
         {galleryImages}
       </div>
